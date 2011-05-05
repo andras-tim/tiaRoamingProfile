@@ -1,0 +1,1 @@
+@%trpLIB%\firefox\firefox.exe %*
