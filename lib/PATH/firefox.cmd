@@ -1,1 +1,1 @@
-@%trpLIB%\firefox\firefox.exe %*
+@"%trpLIB%\firefox\firefox.exe" %*
