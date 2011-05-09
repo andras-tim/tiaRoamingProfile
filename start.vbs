@@ -23,8 +23,11 @@ Sub PrintStatus(fd, text, continuePrevLine)
     End If
 
     ' Replace empyt lines
-    curr = Replace(vbCrLf & curr & vbCrLf, vbCrLf & "echo " & vbCrLf, vbCrLf & "echo." & vbCrLf)
-    curr = Mid(curr, 3, Len(curr) - 4)
+    aCurr = Split(curr, vbCrLf)
+    For i = 0 to UBound(aCurr)
+        If Trim(aCurr(i)) = "echo" Then aCurr(i) = "echo."
+    Next
+    curr = Join(aCurr, vbCrLf)
 
     ' Write out
     fd.WriteLine("cls" & vbCrLf & _
