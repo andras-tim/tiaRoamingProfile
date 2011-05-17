@@ -56,7 +56,7 @@ End Function
 
 Sub DirPATH(fd)
     fout = ""
-    For Each f In fso.GetFolder(prgPath + "\lib\PATH").Files
+    For Each f In fso.GetFolder(prgPath + "\apps\PATH").Files
         If Not fout = "" Then fout = fout + " "
         fout = fout & fso.GetBaseName(f.Name)
     Next
@@ -83,6 +83,7 @@ of.WriteLine("@echo off")
 PrintStatus of, " * Preparing enviroment", False
 
 ' Overwrite parameters
+ChangeEnvFolder of, "trpAPPS", prgPath + "\apps"
 ChangeEnvFolder of, "trpLIB", prgPath + "\lib"
 ChangeEnvFolder of, "trpREPO", prgPath + "\profile\REPO"
 ChangeEnvFolder of, "USERPROFILE", prgPath & "\profile"
@@ -94,7 +95,7 @@ ChangeEnvFolder of, "ProgramData", prgPath & "\profile\PROGRAMDATA"
 of.WriteLine("set HOMEDRIVE=" & envHomeDrive &  vbCrLf & _
              "set HOMEPATH=" & envHomePath  & vbCrLf & _
              "set LANG=" & envLang & vbCrLf & _
-             "set PATH=%trpLIB%\PATH;%PATH%")
+             "set PATH=%trpAPPS%\PATH;%PATH%")
 
 ' Set working directory
 of.WriteLine(prgDrive)

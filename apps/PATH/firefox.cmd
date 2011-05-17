@@ -1,0 +1,1 @@
+@"%trpAPPS%\firefox\firefox.exe" %*

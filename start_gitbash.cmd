@@ -1,3 +1,3 @@
 @echo off
-start "" wscript //nologo start.vbs "`trpLIB`\git\git-bash"
+start "" wscript //nologo start.vbs "`trpAPPS`\git\git-bash"
 exit
