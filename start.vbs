@@ -2,6 +2,9 @@
 'Created by Andras Tim @ 2011
 
 Const envLang = "HU"
+Const envPathData = "data"
+Const envPathApps = "apps"
+Const envPathLib = "lib"
 
 dim prgPath, prevStatText
 prevStatText = ""
@@ -56,7 +59,7 @@ End Function
 
 Sub DirPATH(fd)
     fout = ""
-    For Each f In fso.GetFolder(prgPath + "\apps\PATH").Files
+    For Each f In fso.GetFolder(prgPath + "\" & envPathApps & "\PATH").Files
         If Not fout = "" Then fout = fout + " "
         fout = fout & fso.GetBaseName(f.Name)
     Next
@@ -68,7 +71,7 @@ End Sub
 ' Get paths
 prgPath = fso.GetParentFolderName(wscript.ScriptFullName)
 envHomeDrive = fso.GetDriveName(prgPath)
-envHomePath = Right(prgPath, Len(prgPath) - Len(prgDrive)) & "\profile"
+envHomePath = Right(prgPath, Len(prgPath) - Len(prgDrive)) & "\" & envPathData
 tmpPath = wshShell.ExpandEnvironmentStrings( "%TEMP%" )
 
 ' Get prg temporary file name
@@ -83,15 +86,15 @@ of.WriteLine("@echo off")
 PrintStatus of, " * Preparing enviroment", False
 
 ' Overwrite parameters
-ChangeEnvFolder of, "trpAPPS", prgPath + "\apps"
-ChangeEnvFolder of, "trpLIB", prgPath + "\lib"
-ChangeEnvFolder of, "trpREPO", prgPath + "\profile\REPO"
-ChangeEnvFolder of, "USERPROFILE", prgPath & "\profile"
-ChangeEnvFolder of, "LOCALAPPDATA", prgPath & "\profile\APPDATA\Local"
-ChangeEnvFolder of, "APPDATA", prgPath & "\profile\APPDATA\Roaming"
-ChangeEnvFolder of, "PUBLIC", prgPath & "\profile\PUBLIC"
-ChangeEnvFolder of, "ALLUSERSPROFILE", prgPath & "\profile\PROGRAMDATA"
-ChangeEnvFolder of, "ProgramData", prgPath & "\profile\PROGRAMDATA"
+ChangeEnvFolder of, "trpAPPS", prgPath + "\" & envPathApps
+ChangeEnvFolder of, "trpLIB", prgPath + "\" & envPathLib
+ChangeEnvFolder of, "trpREPO", prgPath + "\" & envPathData & "\REPO"
+ChangeEnvFolder of, "USERPROFILE", prgPath & "\" & envPathData
+ChangeEnvFolder of, "LOCALAPPDATA", prgPath & "\" & envPathData & "\APPDATA\Local"
+ChangeEnvFolder of, "APPDATA", prgPath & "\" & envPathData & "\APPDATA\Roaming"
+ChangeEnvFolder of, "PUBLIC", prgPath & "\" & envPathData & "\PUBLIC"
+ChangeEnvFolder of, "ALLUSERSPROFILE", prgPath & "\" & envPathData & "\PROGRAMDATA"
+ChangeEnvFolder of, "ProgramData", prgPath & "\" & envPathData & "\PROGRAMDATA"
 of.WriteLine("set HOMEDRIVE=" & envHomeDrive &  vbCrLf & _
              "set HOMEPATH=" & envHomePath  & vbCrLf & _
              "set LANG=" & envLang & vbCrLf & _
