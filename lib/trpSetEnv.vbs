@@ -1,6 +1,12 @@
 ' tiaRoamingProfile v0.1.110519
 ' Created by Andras Tim @ 2011
 
+''' MODULES '''
+Import "trpPath"
+Import "trpRunner"
+
+
+''' MAIN '''
 Sub trpseAddPath(envID, envPath)
     trprWriteLine("if not exist """ & envPath & """ mkdir """ & envPath & """" & vbCrLf & _
                   "set " & envID & "=" & envPath)

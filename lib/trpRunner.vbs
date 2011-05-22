@@ -1,6 +1,10 @@
 ' tiaRoamingProfile v0.1.110519
 ' Created by Andras Tim @ 2011
 
+''' MODULES '''
+
+
+''' MAIN '''
 Dim trprPrevStatText: trprPrevStatText = ""
 Dim trprFo, trprCmdPath
 

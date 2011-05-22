@@ -13,9 +13,12 @@ Dim prgPath: prgPath = fso.GetParentFolderName(wscript.ScriptFullName)
 Dim modules: Set modules = CreateObject("Scripting.Dictionary")
 Sub Import(modulePath)
     Dim libFullPath: libFullPath =  prgPath & "\lib\" & modulePath & ".vbs"
-    Dim strCode, fo: Set fo = fso.OpenTextFile(libFullPath): strCode = fo.ReadAll: fo.Close
-    modules.Add fso.GetBaseName(libFullPath), Array(fso.GetParentFolderName(libFullPath))
-    ExecuteGlobal strCode
+    Dim libBaseName: libBaseName =  fso.GetBaseName(libFullPath)
+    If Not modules.Exists(libBaseName) Then
+        Dim strCode, fo: Set fo = fso.OpenTextFile(libFullPath): strCode = fo.ReadAll: fo.Close
+        modules.Add libBaseName, Array(modulePath & ".vbs", fso.GetParentFolderName(libFullPath))
+        ExecuteGlobal strCode
+    End If
 End Sub
 
 

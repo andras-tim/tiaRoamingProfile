@@ -1,6 +1,11 @@
 ' tiaRoamingProfile v0.1.110519
 ' Created by Andras Tim @ 2011
 
+''' MODULES '''
+Import "trpRunner"
+
+
+''' MAIN '''
 Sub trppListPathFolder()
     fout = ""
     For Each f In fso.GetFolder(envPathApps & "\PATH").Files
