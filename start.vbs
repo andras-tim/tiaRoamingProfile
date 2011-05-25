@@ -11,14 +11,50 @@ Dim wshShell: Set wshShell = CreateObject( "WScript.Shell" )
 Dim prgPath: prgPath = fso.GetParentFolderName(wscript.ScriptFullName)
 
 Dim modules: Set modules = CreateObject("Scripting.Dictionary")
-Sub Import(modulePath)
-    Dim libFullPath: libFullPath =  prgPath & "\lib\" & modulePath & ".vbs"
-    Dim libBaseName: libBaseName =  fso.GetBaseName(libFullPath)
-    If Not modules.Exists(libBaseName) Then
+Dim moduleClassTemplate: moduleClassTemplate = _
+"Class %CLASS%" & vbCrLf & _
+"%CODE%" & vbCrLf & _
+"Dim libPath" & vbCrLf & _
+"Private Sub Class_Initialize()" & vbCrLf & _
+"    libPath = ""%PATH%""" & vbCrLf & _
+"    Dim existInit: On Error Resume Next: IsObject Module_Initialize: IsObject Module_Initialize: existInit = (Err.Number = 13): Err.Clear: On Error Goto 0" & vbCrLf & _
+"    If existInit Then Module_Initialize" & vbCrLf & _
+"End Sub" & vbCrLf & _
+"End Class"
+
+Public Sub Import(libName)
+    Dim libFullPath: libFullPath =  prgPath & "\lib\" & libName & ".vbs"
+    If Not modules.Exists(libName) Then
+        'Load class contain from file
         Dim strCode, fo: Set fo = fso.OpenTextFile(libFullPath): strCode = fo.ReadAll: fo.Close
-        modules.Add libBaseName, Array(modulePath & ".vbs", fso.GetParentFolderName(libFullPath))
-        ExecuteGlobal strCode
+        'Get a new class template and substitue it
+        Dim classCode: classCode = moduleClassTemplate
+        classCode = Replace(classCode, "%CLASS%", "mod_" & libName)
+        classCode = Replace(classCode, "%PATH%", fso.GetParentFolderName(libFullPath))
+        classCode = Replace(classCode, "%CODE%", strCode)
+        'Eval class
+        On Error Resume Next
+        ExecuteGlobal classCode
+        If Not Err.Number = 0 Then
+            WScript.StdOut.WriteLine "====== CODE ======" & vbCrLf & classCode & vbCrLf & "====== CODE ======" & vbCrLf
+            WScript.StdOut.WriteLine "Microsoft VBScript runtime error: " & Err.Description & vbCrLf
+            WScript.StdOut.WriteLine "MODULE: " & libName & vbCrLf & "METHOD: Code evaluate"
+            WScript.Quit(1)
+        End If
+        On Error Goto 0
+        'Register a new instance of class into modules
+        ExecuteGlobal "modules.Add """ & libName & """, New mod_" & libName
+        If Not Err.Number = 0 Then
+            WScript.StdOut.WriteLine "MODULE: " & libName & vbCrLf & "METHOD: Module_Initialize"
+            WScript.Quit(1)
+        End If
     End If
+End Sub
+
+Public Sub Include(fileName)
+    'Load VBScript from file
+    Dim strCode, fo: Set fo = fso.OpenTextFile(prgPath & "\" & fileName): strCode = fo.ReadAll: fo.Close
+    Execute strCode
 End Sub
 
 
