@@ -20,6 +20,7 @@ Sub trpseSetEnv()
 
     trpseAddPath "trpAPPS", envPathApps
     trpseAddPath "trpDATA", envPathData
+    trpseAddPath "trpTOOLS", envPathTools
 
     trpseAddPath "USERPROFILE",     envPathData & "\USER"
     trpseAddPath "LOCALAPPDATA",     envPathData & "\USER\AppData\Local"
@@ -30,5 +31,5 @@ Sub trpseSetEnv()
 
     trprWriteLine "set LANG=" & setsLang
 
-    trppSetupPathFolder
+    trppSetupPathFolders
 End Sub

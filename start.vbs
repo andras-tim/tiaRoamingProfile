@@ -3,6 +3,7 @@
 
 Const setsPathApps = "apps"
 Const setsPathData = "data"
+Const setsPathTools = "tools"
 Const setsLang = "HU"
 
 ''' COMMON RESOURCES '''
@@ -57,7 +58,8 @@ Sub CreateCmd()
     Dim runProgram: runProgram = Replace(Args2String, "`", "%")
     If runProgram = "" Then
         runProgram = "cmd"
-        trppListPathFolder
+        trppListPathFolders
+        trprPrintStatus "", False
     Else
         trprPrintStatus " * Starting program...", False
     End If
@@ -70,8 +72,10 @@ End Sub
 
 
 ''' MAIN '''
+Dim envPathTools: envPathTools = prgPath & "\" & setsPathTools
 Dim envPathApps: envPathApps = prgPath & "\" & setsPathApps
 Dim envPathData: envPathData = prgPath & "\" & setsPathData
+
 CreateCmd
 trprRunAndClean
 

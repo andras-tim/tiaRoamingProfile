@@ -6,16 +6,23 @@ Import "trpRunner"
 
 
 ''' MAIN '''
-Sub trppListPathFolder()
+Function trppListFolder(directory)
     fout = ""
-    For Each f In fso.GetFolder(envPathApps & "\PATH").Files
+    For Each f In fso.GetFolder(directory).Files
         If Not fout = "" Then fout = fout + " "
         fout = fout & fso.GetBaseName(f.Name)
     Next
-    trprPrintStatus vbCrLf & vbCrLf &  "Apps in path: " & fout, False
+    trppListFolder = fout
+End Function
+
+Sub trppListPathFolders()
+    trprPrintStatus vbCrLf & _
+                    vbCrLf & _
+                    "Apps in path: " & trppListFolder(envPathApps & "\PATH") & vbCrLf & vbCrLf & _
+                    "Tools in path: " & trppListFolder(envPathTools), False
 End Sub
 
-Sub trppSetupPathFolder()
+Sub trppSetupPathFolders()
     ' Add to PATH
-    trprWriteLine "set PATH=%trpAPPS%\PATH;%PATH%"
+    trprWriteLine "set PATH=%trpTOOLS%;%trpAPPS%\PATH;%PATH%"
 End Sub
