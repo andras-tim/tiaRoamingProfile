@@ -25,6 +25,7 @@ End Sub
 
 ''' MODULES '''
 Import "trpRunner"
+Import "trpPreConf"
 Import "trpPath"
 Import "trpSetEnv"
 
@@ -76,6 +77,7 @@ Dim envPathTools: envPathTools = prgPath & "\" & setsPathTools
 Dim envPathApps: envPathApps = prgPath & "\" & setsPathApps
 Dim envPathData: envPathData = prgPath & "\" & setsPathData
 
+trppcPrepare
 CreateCmd
 trprRunAndClean
 
