@@ -19,12 +19,12 @@ call "%command%" %command_params%
 goto end
 
 :error_missing
-echo "Missing path of program from parameter"
+echo ERROR: Missing path of program from parameter
 echo.
 goto end
 
 :error_not_exists
-echo "Not exists the requested path under Program Files folder(s) - if exists Program Files (x86)"
+echo ERROR: Not exists the requested path under Program Files folder(s) - if exists Program Files (x86)
 echo.
 
 :end
