@@ -1,0 +1,1 @@
+@runFromPrgFiles "Notepad++\notepad++.exe" %*

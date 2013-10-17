@@ -1,0 +1,1 @@
+@runFromPrgFiles "WinRAR\WinRAR.exe" %*
