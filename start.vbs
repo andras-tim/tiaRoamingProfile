@@ -49,8 +49,8 @@ Sub CreateCmd()
     trprInitFile
     trprPrintStatus " * Preparing enviroment", False
 
-    ' Overwrite parameters
-    trpseSetEnv
+    ' Setup environment varaibles, directories, symlinks
+    trpseSetupEnvironment
 
     ' Set working directory
     trprWriteLine("%HOMEDRIVE%")
