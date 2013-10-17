@@ -4,6 +4,7 @@
 Const setsPathApps = "apps"
 Const setsPathData = "data"
 Const setsPathTools = "tools"
+Const setsPathVendors = "vendors"
 Const setsLang = "HU"
 
 ''' COMMON RESOURCES '''
@@ -77,6 +78,7 @@ End Sub
 Dim envPathTools: envPathTools = prgPath & "\" & setsPathTools
 Dim envPathApps: envPathApps = prgPath & "\" & setsPathApps
 Dim envPathData: envPathData = prgPath & "\" & setsPathData
+Dim envPathVendors: envPathVendors = prgPath & "\" & setsPathVendors
 Dim mainRetCode: mainRetCode = 0
 
 trpsmInitializeSessionDirectory

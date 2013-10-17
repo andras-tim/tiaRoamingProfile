@@ -23,6 +23,7 @@ Sub trpseSetEnv()
     trpseAddPath "trpAPPS", envPathApps
     trpseAddPath "trpDATA", envPathData
     trpseAddPath "trpTOOLS", envPathTools
+    trpseAddPath "trpVENDORS", envPathVendors
     trprWriteLine "set trpSESSION=" & sessionDir
 
     trpseAddPath "USERPROFILE",     envPathData & "\USER"
