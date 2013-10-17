@@ -26,6 +26,9 @@ Sub trpseSetEnv()
     trpseAddPath "trpVENDORS", envPathVendors
     trprWriteLine "set trpSESSION=" & sessionDir
 
+    trprWriteLine "set DEVNULL_OUT=" & sessionDir & "\devnull_out.txt"
+    trprWriteLine "set DEVNULL_ERR=" & sessionDir & "\devnull_err.txt"
+
     trpseAddPath "USERPROFILE",     envPathData & "\USER"
     trpseAddPath "LOCALAPPDATA",     envPathData & "\USER\AppData\Local"
     trpseAddPath "APPDATA",         envPathData & "\USER\AppData\Roaming"
