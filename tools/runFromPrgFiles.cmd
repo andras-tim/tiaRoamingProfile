@@ -15,7 +15,7 @@ if exist "%ProgramFiles(x86)%\%~1" set command=%ProgramFiles(x86)%\%~1
 if "%command%" == "NULL" goto error_not_exists
 
 rem Run command with parameters
-call "%command%" %command_params%
+start "" "%command%" %command_params%
 goto end
 
 :error_missing
