@@ -1,7 +1,8 @@
-' tiaRoamingProfile v0.1.110519
-' Created by Andras Tim @ 2011
+' tiaRoamingProfile v0.1.131017
+' Created by Andras Tim @ 2013
 
 ''' MODULES '''
+Import "trpSessionManager"
 Import "trpPath"
 Import "trpRunner"
 
@@ -15,12 +16,14 @@ End Sub
 
 Sub trpseSetEnv()
     Dim prgDrive: prgDrive = fso.GetDriveName(prgPath)
+    Dim sessionDir: sessionDir = trpsmGetSessionDirectory
     trprWriteLine "set HOMEDRIVE=" & prgDrive
     trprWriteLine "set HOMEPATH=" & Right(envPathData, Len(envPathData) - Len(prgDrive)) & "\USER"
 
     trpseAddPath "trpAPPS", envPathApps
     trpseAddPath "trpDATA", envPathData
     trpseAddPath "trpTOOLS", envPathTools
+    trprWriteLine "set trpSESSION=" & sessionDir
 
     trpseAddPath "USERPROFILE",     envPathData & "\USER"
     trpseAddPath "LOCALAPPDATA",     envPathData & "\USER\AppData\Local"

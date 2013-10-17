@@ -2,6 +2,7 @@
 ' Created by Andras Tim @ 2011
 
 ''' MODULES '''
+Import "trpSessionManager"
 
 
 ''' MAIN '''
@@ -9,9 +10,7 @@ Dim trprPrevStatText: trprPrevStatText = ""
 Dim trprFo, trprCmdPath
 
 Sub trprInitFile()
-    Dim tmpPath: tmpPath = wshShell.ExpandEnvironmentStrings( "%TEMP%" )
-    Randomize
-    trprCmdPath = tmpPath & "\tiaRoamingProfile_" & Fix(Rnd*100000) & ".cmd"
+    trprCmdPath = trpsmGetSessionDirectory & "\session.cmd"
     Set trprFo = fso.CreateTextFile(trprCmdPath, True)
     trprWriteLine("@echo off")
 End Sub
@@ -51,10 +50,6 @@ Sub trprPrintStatus(text, continuePrevLine)
     trprPrevStatText = trprPrevStatText & curr
 End Sub
 
-Sub trprRunAndClean()
-    'Start cmd
-    wshShell.Run trprCmdPath, 1, True
-    'Delete temp file
-    Dim fo: Set fo = fso.GetFile(trprCmdPath)
-    fo.Delete
-End Sub
+Function trprRun()
+    trprRun = wshShell.Run(trprCmdPath, 1, True)
+End Function

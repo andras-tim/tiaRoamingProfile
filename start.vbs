@@ -1,5 +1,5 @@
-' tiaRoamingProfile v0.1.110519
-' Created by Andras Tim @ 2011
+' tiaRoamingProfile v0.1.131017
+' Created by Andras Tim @ 2013
 
 Const setsPathApps = "apps"
 Const setsPathData = "data"
@@ -24,6 +24,7 @@ End Sub
 
 
 ''' MODULES '''
+Import "trpSessionManager"
 Import "trpRunner"
 Import "trpPreConf"
 Import "trpPath"
@@ -76,11 +77,16 @@ End Sub
 Dim envPathTools: envPathTools = prgPath & "\" & setsPathTools
 Dim envPathApps: envPathApps = prgPath & "\" & setsPathApps
 Dim envPathData: envPathData = prgPath & "\" & setsPathData
+Dim mainRetCode: mainRetCode = 0
 
+trpsmInitializeSessionDirectory
 trppcPrepare
 CreateCmd
-trprRunAndClean
+mainRetCode = trprRun
+trpsmPurgeSessionDirectory
 
 ''' DEINIT '''
 Set fso = Nothing
 Set wshShell = Nothing
+
+WScript.Quit mainRetCode
