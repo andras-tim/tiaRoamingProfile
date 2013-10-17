@@ -8,7 +8,15 @@ Import "trpSessionManager"
 ''' MAIN '''
 Dim trprPrevStatText: trprPrevStatText = ""
 Dim trprFo, trprCmdPath
+Dim trprFunctions: Set trprFunctions = CreateObject("Scripting.Dictionary")
 
+trprAddFunction "trprPrintCmdHeader", _
+                "cls" & vbCrLf & _
+                "echo ..:: tiaRoamingProfile ::.. " & vbCrLf & _
+                "echo."
+
+
+''' SUBS, FUNCTIONS '''
 Sub trprInitFile()
     trprCmdPath = trpsmGetSessionDirectory & "\session.cmd"
     Set trprFo = fso.CreateTextFile(trprCmdPath, True)
@@ -16,14 +24,32 @@ Sub trprInitFile()
 End Sub
 
 Sub trprEndFile()
-    trprWriteLine("exit")
+    trprWriteLine("goto end")
+    trprWriteFunctions
+    trprWriteLine(":end" & vbCrLf & _
+                  "exit" & vbCrLf)
     trprFo.Close
+End Sub
+
+Sub trprAddFunction(name, commands)
+    trprFunctions.Add name, ":" & name & vbCrLf & _
+                            commands & vbCrLf & _
+                            "goto :eof"
+End Sub
+
+Sub trprCallFunction(name, txtConcatenatedParameters)
+    trprWriteLine "call :" & name & " " & txtConcatenatedParameters
 End Sub
 
 Sub trprWriteLine(text)
     trprFo.WriteLine(text)
 End Sub
 
+Sub trprWriteFunctions()
+    For Each name In trprFunctions
+        trprWriteLine(trprFunctions(name))
+    Next
+End Sub
 
 Sub trprPrintStatus(text, continuePrevLine)
     ' Relpace new lines
@@ -44,9 +70,7 @@ Sub trprPrintStatus(text, continuePrevLine)
     curr = Join(aCurr, vbCrLf)
 
     ' Write out
-    trprWriteLine("cls" & vbCrLf & _
-                  "echo ..:: tiaRoamingProfile ::.. " & vbCrLf & _
-                  "echo." & trprPrevStatText & curr)
+    trprCallFunction "trprPrintCmdHeader", trprPrevStatText & curr
     trprPrevStatText = trprPrevStatText & curr
 End Sub
 
