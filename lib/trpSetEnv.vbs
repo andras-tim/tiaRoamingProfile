@@ -12,13 +12,15 @@ Import "trpRunner"
 Const SID_EVERYONE = "S-1-1-0"
 Const SID_LOCAL_SYSTEM = "S-1-5-18"
 
-trprAddFunction "trpseCreateShortcutLikeLink", _
+trprAddFunction "trpseCreateLink", _
                 "set link_path=%~1" & vbCrLf & _
                 "set target_path=%~2" & vbCrLf & _
                 "if not exist ""%target_path%"" mkdir ""%target_path%""" & vbCrLf & _
                 "if exist ""%link_path%"" rmdir /q ""%link_path%""" & vbCrLf & _
                 "call ""%trpTOOLS%\symlinkDir.cmd"" ""%link_path%"" ""%target_path%"""
 
+trprAddFunction "trpseSetLinkLikeShortcut", _
+                "set link_path=%~1" & vbCrLf & _
                 "icacls ""%link_path%"" /deny *" & SID_EVERYONE & ":(RD) /L > ""%DEVNULL_OUT%""" & vbCrLf & _
                 "icacls ""%link_path%"" /setowner *" & SID_LOCAL_SYSTEM & " /L > ""%DEVNULL_OUT%""" & vbCrLf & _
                 "attrib +S +H +I ""%link_path%"" /L"
@@ -31,8 +33,14 @@ Sub trpseCreateAndAddPath(envID, envPath)
     trprPrintStatus ".", True
 End Sub
 
+Sub trpseCreateLink(linkPath, targetPath)
+    trprCallFunction "trpseCreateLink", """" & linkPath & """ """ & targetPath & """"
+    trprPrintStatus ".", True
+End Sub
+
 Sub trpseCreateShortcutLikeLink(linkPath, targetPath)
-    trprCallFunction "trpseCreateShortcutLikeLink", """" & linkPath & """ """ & targetPath & """"
+    trpseCreateLink linkPath, targetPath
+    trprCallFunction "trpseSetLinkLikeShortcut", """" & linkPath & """"
     trprPrintStatus ".", True
 End Sub
 
