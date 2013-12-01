@@ -57,6 +57,8 @@ Sub trpseSetupEnvironment()
     trpseCreateAndAddPath "PUBLIC", envPathData & "\PUBLIC"
     trpseCreateAndAddPath "ALLUSERSPROFILE", envPathData & "\PROGRAMDATA"
     trpseCreateAndAddPath "ProgramData", envPathData & "\PROGRAMDATA"
+    
+    trprWriteLine "set HOME=%USERPROFILE%"
 
     trpseCreateShortcutLikeLink envPathData & "\USER\Application Data", envPathData & "\USER\AppData\Roaming"
     trpseCreateShortcutLikeLink envPathData & "\USER\Cookies", envPathData & "\USER\AppData\Roaming\Microsoft\Windows\Cookies"
