@@ -52,8 +52,7 @@ Sub CreateCmd()
     trpseSetupEnvironment
 
     ' Set working directory
-    trprWriteLine("%HOMEDRIVE%")
-    trprWriteLine("cd """ & envPathData & """")
+    trprWriteLine("cd /d """ & envPathData & """")
     trprPrintStatus " done", True
 
     ' Get and write program
