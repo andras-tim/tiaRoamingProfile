@@ -38,6 +38,8 @@ End Sub
 Sub trpseSetupEnvironment()
     Dim prgDrive: prgDrive = fso.GetDriveName(prgPath)
     Dim sessionDir: sessionDir = trpsmGetSessionDirectory
+    Dim localAppdataDir: localAppDataDir = envPathData & "\USER\AppData\Local"
+    Dim roamingAppdataDir: roamingAppdataDir = envPathData & "\USER\AppData\Roaming"
 
     trprWriteLine "set HOMEDRIVE=" & prgDrive
     trprWriteLine "set HOMEPATH=" & Right(envPathData, Len(envPathData) - Len(prgDrive)) & "\USER"
@@ -48,28 +50,28 @@ Sub trpseSetupEnvironment()
     trpseCreateAndAddPath "trpVENDORS", envPathVendors
     trprWriteLine "set trpSESSION=" & sessionDir
 
-    trprWriteLine "set DEVNULL_OUT=" & sessionDir & "\devnull_out.txt"
-    trprWriteLine "set DEVNULL_ERR=" & sessionDir & "\devnull_err.txt"
+    trprWriteLine "set DEVNULL_OUT=%trpSESSION%\devnull_out.txt"
+    trprWriteLine "set DEVNULL_ERR=%trpSESSION%\devnull_err.txt"
 
     trpseCreateAndAddPath "USERPROFILE", envPathData & "\USER"
-    trpseCreateAndAddPath "LOCALAPPDATA", envPathData & "\USER\AppData\Local"
-    trpseCreateAndAddPath "APPDATA", envPathData & "\USER\AppData\Roaming"
+    trpseCreateAndAddPath "LOCALAPPDATA", localAppDataDir
+    trpseCreateAndAddPath "APPDATA", roamingAppdataDir
     trpseCreateAndAddPath "PUBLIC", envPathData & "\PUBLIC"
     trpseCreateAndAddPath "ALLUSERSPROFILE", envPathData & "\PROGRAMDATA"
     trpseCreateAndAddPath "ProgramData", envPathData & "\PROGRAMDATA"
     
     trprWriteLine "set HOME=%USERPROFILE%"
 
-    trpseCreateShortcutLikeLink envPathData & "\USER\Application Data", envPathData & "\USER\AppData\Roaming"
-    trpseCreateShortcutLikeLink envPathData & "\USER\Cookies", envPathData & "\USER\AppData\Roaming\Microsoft\Windows\Cookies"
-    trpseCreateShortcutLikeLink envPathData & "\USER\Local Settings", envPathData & "\USER\AppData\Local"
-    trpseCreateShortcutLikeLink envPathData & "\USER\AppData\Local\Application Data", envPathData & "\USER\AppData\Local"
-    trpseCreateShortcutLikeLink envPathData & "\USER\AppData\Local\Temporary Internet Files", envPathData & "\USER\AppData\Local\Microsoft\Windows\Temporary Internet Files"
-    trpseCreateShortcutLikeLink envPathData & "\USER\NetHood", envPathData & "\USER\AppData\Roaming\Microsoft\Windows\Network Shortcuts"
-    trpseCreateShortcutLikeLink envPathData & "\USER\PrintHood", envPathData & "\USER\AppData\Roaming\Microsoft\Windows\Printer Shortcuts\"
-    trpseCreateShortcutLikeLink envPathData & "\USER\SendTo", envPathData & "\USER\AppData\Roaming\Microsoft\Windows\SendTo"
-    trpseCreateShortcutLikeLink envPathData & "\USER\Start Menu", envPathData & "\USER\AppData\Roaming\Microsoft\Windows\Start Menu"
-    trpseCreateShortcutLikeLink envPathData & "\USER\Templates", envPathData & "\USER\AppData\Roaming\Microsoft\Windows\Templates"
+    trpseCreateShortcutLikeLink envPathData & "\USER\Application Data", roamingAppdataDir & ""
+    trpseCreateShortcutLikeLink envPathData & "\USER\Cookies", roamingAppdataDir & "\Microsoft\Windows\Cookies"
+    trpseCreateShortcutLikeLink envPathData & "\USER\Local Settings", localAppDataDir & ""
+    trpseCreateShortcutLikeLink localAppDataDir & "\Application Data", localAppDataDir & ""
+    trpseCreateShortcutLikeLink localAppDataDir & "\Temporary Internet Files", localAppDataDir & "\Microsoft\Windows\Temporary Internet Files"
+    trpseCreateShortcutLikeLink envPathData & "\USER\NetHood", roamingAppdataDir & "\Microsoft\Windows\Network Shortcuts"
+    trpseCreateShortcutLikeLink envPathData & "\USER\PrintHood", roamingAppdataDir & "\Microsoft\Windows\Printer Shortcuts\"
+    trpseCreateShortcutLikeLink envPathData & "\USER\SendTo", roamingAppdataDir & "\Microsoft\Windows\SendTo"
+    trpseCreateShortcutLikeLink envPathData & "\USER\Start Menu", roamingAppdataDir & "\Microsoft\Windows\Start Menu"
+    trpseCreateShortcutLikeLink envPathData & "\USER\Templates", roamingAppdataDir & "\Microsoft\Windows\Templates"
 
     trprWriteLine "set LANG=" & setsLang
 
