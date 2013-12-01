@@ -11,6 +11,7 @@ Const setsLang = "HU"
 Dim fso: Set fso = CreateObject("Scripting.FileSystemObject")
 Dim wshShell: Set wshShell = CreateObject( "WScript.Shell" )
 Dim prgPath: prgPath = fso.GetParentFolderName(wscript.ScriptFullName)
+Dim prgDrive: prgDrive = fso.GetDriveName(prgPath)
 
 Dim modules: Set modules = CreateObject("Scripting.Dictionary")
 Sub Import(modulePath)
@@ -50,6 +51,8 @@ Sub CreateCmd()
 
     ' Setup environment varaibles, directories, symlinks
     trpseSetupEnvironment
+    ' Set custom Documents directory
+    trpseCreateLink envPathData & "\USER\Documents", prgDrive & "\Documents"
 
     ' Set working directory
     trprWriteLine("cd /d """ & envPathData & """")

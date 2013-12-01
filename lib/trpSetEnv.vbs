@@ -45,7 +45,6 @@ Sub trpseCreateShortcutLikeLink(linkPath, targetPath)
 End Sub
 
 Sub trpseSetupEnvironment()
-    Dim prgDrive: prgDrive = fso.GetDriveName(prgPath)
     Dim sessionDir: sessionDir = trpsmGetSessionDirectory
     Dim localAppdataDir: localAppDataDir = envPathData & "\USER\AppData\Local"
     Dim roamingAppdataDir: roamingAppdataDir = envPathData & "\USER\AppData\Roaming"
