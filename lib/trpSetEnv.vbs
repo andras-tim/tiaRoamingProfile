@@ -16,8 +16,9 @@ trprAddFunction "trpseCreateShortcutLikeLink", _
                 "set link_path=%~1" & vbCrLf & _
                 "set target_path=%~2" & vbCrLf & _
                 "if not exist ""%target_path%"" mkdir ""%target_path%""" & vbCrLf & _
-                "if exist ""%link_path%"" goto :eof" & vbCrLf & _
-                "call ""%trpTOOLS%\symlinkDir.cmd"" ""%link_path%"" ""%target_path%""" & vbCrLf & _
+                "if exist ""%link_path%"" rmdir /q ""%link_path%""" & vbCrLf & _
+                "call ""%trpTOOLS%\symlinkDir.cmd"" ""%link_path%"" ""%target_path%"""
+
                 "icacls ""%link_path%"" /deny *" & SID_EVERYONE & ":(RD) /L > ""%DEVNULL_OUT%""" & vbCrLf & _
                 "icacls ""%link_path%"" /setowner *" & SID_LOCAL_SYSTEM & " /L > ""%DEVNULL_OUT%""" & vbCrLf & _
                 "attrib +S +H +I ""%link_path%"" /L"
