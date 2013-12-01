@@ -14,6 +14,17 @@ trprAddFunction "trprPrintCmdHeader", _
                 "cls" & vbCrLf & _
                 "echo ..:: tiaRoamingProfile ::.. " & vbCrLf & _
                 "echo."
+                
+trprAddFunction "trprRunWithErrorChecking", _
+                "%*" & vbCrLf & _
+                "set ret=%errorlevel%" & vbCrLf & _
+                "if %ret% == 0 goto :eof" & vbCrLf & _
+                "echo." & vbCrLf & _
+                "echo ERROR: A command returned with %ret% exit code!" & vbCrLf & _
+                "echo." & vbCrLf & _
+                "echo." & vbCrLf & _
+                "pause" & vbCrLf & _
+                "exit %ret%"
 
 
 ''' SUBS, FUNCTIONS '''

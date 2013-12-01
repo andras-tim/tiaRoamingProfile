@@ -67,7 +67,7 @@ Sub CreateCmd()
         trprPrintStatus " * Starting program...", False
     End If
     trprPrintStatus "", False
-    trprWriteLine(runProgram)
+    trprCallFunction "trprRunWithErrorChecking", runProgram
 
     ' Close file
     trprEndFile
