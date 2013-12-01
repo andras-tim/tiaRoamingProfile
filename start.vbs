@@ -37,11 +37,10 @@ Function Args2String()
     ret = ""
     If (WScript.Arguments.Count > 0) Then
         For i = 0 to WScript.Arguments.Count - 1
-            If Not i = 0 Then ret = ret & " "
-            ret = ret & """" & WScript.Arguments.Item(i) & """"
+            ret = ret & WScript.Arguments.Item(i) & " "
         Next
     End If
-    Args2String = ret
+    Args2String = RTrim(ret)
 End Function
 
 Sub CreateCmd()
