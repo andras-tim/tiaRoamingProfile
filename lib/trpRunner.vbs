@@ -63,7 +63,7 @@ Sub trprWriteFunctions()
 End Sub
 
 Sub trprPrintStatus(text, continuePrevLine)
-    ' Relpace new lines
+    ' Replace new lines
     curr = Replace(text, vbCrLf, vbCrLf & "echo ")
 
     ' Like "echo -n"
@@ -73,7 +73,7 @@ Sub trprPrintStatus(text, continuePrevLine)
         curr = vbCrLf & "echo " & curr
     End If
 
-    ' Replace empyt lines
+    ' Replace empty lines
     aCurr = Split(curr, vbCrLf)
     For i = 0 to UBound(aCurr)
         If Trim(aCurr(i)) = "echo" Then aCurr(i) = "echo."
